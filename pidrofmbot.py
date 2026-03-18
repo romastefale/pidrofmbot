@@ -1,10 +1,15 @@
 import os
-from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+import requests
 
-TOKEN = os.getenv("TOKEN")
+from telegram import Update, InlineQueryResultPhoto
+from telegram.ext import Application, InlineQueryHandler, ContextTypes
 
-app = ApplicationBuilder().token(TOKEN).build()
+
+# pega o token da variável de ambiente do Render
+TOKEN = os.getenv("TELEGRAM_TOKEN")
+
+if not TOKEN:
+    raise ValueError("Token não encontrado nas variáveis de ambiente")
 
 
 async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -28,7 +33,7 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 id=str(i),
                 photo_url=cover,
                 thumbnail_url=cover,
-                title=f"{title}",
+                title=title,
                 description=f"{artist} • Tap to confirm",
                 caption=f"_{user_name} is listening to..._\n\n♫ Playing: {title}\n★ Artist: {artist}",
                 parse_mode="Markdown"
