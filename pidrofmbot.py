@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 
 TOKEN = os.getenv("TELEGRAM_TOKEN")
 WEBHOOK_URL = os.getenv("WEBHOOK_URL")
-WEBHOOK_SECRET = os.getenv("WEBHOOK_SECRET", TOKEN[:20] if TOKEN else None)
+WEBHOOK_SECRET = os.getenv("WEBHOOK_SECRET", TOKEN.replace(":", "")[:20] if TOKEN else None)
 
 try:
     PORT = int(os.getenv("PORT", 8443))
